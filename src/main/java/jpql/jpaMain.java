@@ -26,8 +26,8 @@ public class jpaMain {
             em.flush();
             em.clear();
 
-            List<Team> result = em.createQuery("select m.team from Member m join m.team t", Team.class)
-                    .getResultList(); // 왠만하면 실제 출력되는 sql 구문과 비슷하게 만들자 -> 엔티티 프로젝션
+            em.createQuery("select o.address from Order o", Address.class)
+                    .getResultList(); // 임베디드 타입 프로젝션
 
 
             tx.commit();
