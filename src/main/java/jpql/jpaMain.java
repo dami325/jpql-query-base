@@ -26,13 +26,13 @@ public class jpaMain {
             em.flush();
             em.clear();
 
-            List resultList = em.createQuery("select distinct m.username, m.age from Member m")
-                    .getResultList();// 스칼라 타입 프로젝션(일반 sql 프로젝션)
+            List<MemberDTO> result = em.createQuery("select new jpql.MemberDTO(m.username, m.age) from Member m", MemberDTO.class)
+                    .getResultList();
 
-            Object o = resultList.get(0);
-            Object[] result = (Object[]) o;
-            System.out.println("username = " + result[0]);
-            System.out.println("age = " + result[1]);
+            MemberDTO memberDTO = result.get(0);
+            System.out.println("memberDTO = " + memberDTO.getUsername());
+            System.out.println("memberDTO = " + memberDTO.getAge());
+
 
             tx.commit();
         } catch (Exception e) {
