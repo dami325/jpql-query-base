@@ -23,7 +23,7 @@ public class jpaMain {
                 em.persist(team);
 
                 Member member = new Member();
-                member.setUsername(null);
+                member.setUsername("관리자");
                 member.setAge(10);
                 member.setType(MemberType.ADMIN);
 
@@ -34,8 +34,8 @@ public class jpaMain {
             em.flush();
             em.clear();
 
-            /** COALESCE 하나씩 조회해서 null이 아니면 반환*/
-            String query = "SELECT COALESCE(m.username,'이름 없는 회원') as username from Member m";
+            /** NULLIF : 두 값이 같으면 null 반환, 다르면 첫번째 값 반환*/
+            String query = "SELECT NULLIF(m.username,'관리자') as username from Member m";
             List<String> result = em.createQuery(query, String.class)
                     .getResultList();
 
