@@ -26,11 +26,8 @@ public class jpaMain {
             em.flush();
             em.clear();
 
-            List<Member> result = em.createQuery("select m from Member m", Member.class)
-                    .getResultList();
-
-            Member findMember = result.get(0);
-            findMember.setAge(20); // 엔티티 프로젝션 - 변경값 반영됨
+            List<Team> result = em.createQuery("select m.team from Member m join m.team t", Team.class)
+                    .getResultList(); // 왠만하면 실제 출력되는 sql 구문과 비슷하게 만들자 -> 엔티티 프로젝션
 
 
             tx.commit();
