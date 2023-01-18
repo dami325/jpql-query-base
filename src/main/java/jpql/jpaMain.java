@@ -23,7 +23,7 @@ public class jpaMain {
                 em.persist(team);
 
                 Member member = new Member();
-                member.setUsername("teamA");
+                member.setUsername(null);
                 member.setAge(10);
                 member.setType(MemberType.ADMIN);
 
@@ -34,12 +34,8 @@ public class jpaMain {
             em.flush();
             em.clear();
 
-            /** 기본 CASE 식*/
-            String query = "select case when m.age <= 10 then '학생요금'" +
-                                       "when m.age >= 60 then '경로요금'" +
-                                       "else '일반요금'" +
-                                   "end " +
-                                       "from Member m";
+            /** COALESCE 하나씩 조회해서 null이 아니면 반환*/
+            String query = "SELECT COALESCE(m.username,'이름 없는 회원') as username from Member m";
             List<String> result = em.createQuery(query, String.class)
                     .getResultList();
 
